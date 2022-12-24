@@ -18,6 +18,20 @@ class App extends Component {
     filter: '',
   };
 
+ componentDidMount() {
+    const storedContacts = JSON.parse(localStorage.getItem('contacts'));
+    storedContacts &&
+      storedContacts.length > 0 &&
+      this.setState({ contacts: storedContacts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    prevState.contacts !== this.state.contacts &&
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
+
+
+
   onContatactAdd = ({ name, number }) => {
     const newContact = {
       id: nanoid(),
